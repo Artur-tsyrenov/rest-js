@@ -42,18 +42,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')")
                 .and().formLogin()
                 .successHandler(new LoginSuccessHandler());
+        http.cors().and().csrf().disable();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
-    }
-
-
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8080/")
-                .allowedMethods("*");
     }
 }
