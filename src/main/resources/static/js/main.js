@@ -21,6 +21,7 @@ const getDelPassword = document.getElementById('delPassword')
 const btnSubmit = document.querySelector('.btnSubmit')
 const btnDelSubmit = document.querySelector('.btnDelSubmit')
 const url = 'http://localhost:8080/api/users'
+
 let allUsers = ''
 
 const renderUsers = (users) => {
@@ -35,7 +36,11 @@ const renderUsers = (users) => {
                             <td>${user.email}</td>
                             <td>${user.username}</td>
                             <td>${user.password}</td>
-                            <td></td>
+                            <td>${user.roles.length > 1 ? 
+                                        user.roles[0].role.substring(5) + ' ' 
+                                        + user.roles[1].role.substring(5) :
+                                        user.roles[0].role.substring(5)}
+                            </td>
                             <td>
                                 <button type="button" id="edit-user" 
                                 class="btn btn-info text-light">Редактировать
@@ -56,9 +61,36 @@ fetch(url)
     .then(response => response.json())
     .then(data => renderUsers(data))
 
+let curUser = ''
+let curUserRoles = ''
+const currentUserInfo = document.querySelector('.currentUser')
+// let currentUser = th:text="${#authentication.principal.username}"
+console.log(currentUser)
+fetch(`${url}/1`)
+    .then(response => response.json())
+    .then(user => {
+        user.roles.forEach(role => {
+            curUserRoles += role.role.substring(5) + ' '
+        })
+        curUser +=  `
+                        <tr>
+                            <td></td>
+                            <td>${user.firstName}</td>
+                            <td>${user.lastName}</td>
+                            <td>${user.age}</td>
+                            <td>${user.salary}</td>
+                            <td>${user.email}</td>
+                            <td>${user.username}</td>
+                            <td>${user.password}</td>
+                            <td>${curUserRoles}</td>
+                        </tr>
+                    `
+        currentUserInfo.innerHTML = curUser
+    })
+
+
 const navTabLeft = document.querySelectorAll('.nav-link.leftNav')
 const navTabRight = document.querySelectorAll('.nav-link.rightNav')
-const content = document.querySelectorAll('.card')
 
 navTabLeft.forEach(onTabCLickLeft)
 navTabRight.forEach(onTabCLickRight)
@@ -78,7 +110,7 @@ function onTabCLickLeft(item) {
         }
 
 
-        if (cardId === '#2') {
+        if (cardId === '#userPanel') {
             pillAdmin.classList.remove('active')
             pillUser.classList.add('active')
         } else {
@@ -109,7 +141,6 @@ function onTabCLickRight(item) {
         }
     })
 }
-
 
 
 userList.addEventListener('click', (event) => {
@@ -156,7 +187,6 @@ userList.addEventListener('click', (event) => {
         })
 
     } else if (deleteButtonPressed) {
-        console.log('Del')
         getDelId.value = id
         getDelFirstName.value = parent.children[1].innerHTML
         getDelLastName.value = parent.children[2].innerHTML

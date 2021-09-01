@@ -9,9 +9,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import ru.javamentor.restjs.config.handler.LoginSuccessHandler;
 import ru.javamentor.restjs.service.UserService;
 
 @Configuration
@@ -41,8 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
                 .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
                 .antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')")
                 .and().formLogin()
-                .successHandler(new LoginSuccessHandler());
-        http.cors().and().csrf().disable();
+                .and().cors()
+                .and().csrf().disable();
     }
 
     @Bean

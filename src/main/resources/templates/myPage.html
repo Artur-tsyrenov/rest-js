@@ -21,120 +21,145 @@
     <div class="col-2 bg-white mt-3">
         <ul class="nav nav-pills flex-column" role="tablist">
             <li class="nav-item">
-                <a class="nav-link leftNav active" role="tab" href="#1">Администратор</a>
+                <a class="nav-link leftNav active" role="tab" href="#adminPanel">Администратор</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link leftNav" role="tab" href="#2">Пользователь</a>
+                <a class="nav-link leftNav" role="tab" href="#userPanel">Пользователь</a>
             </li>
         </ul>
-        <div class="tab-content">
-            <div role="tabpanel" class="tab-pane pillAdmin active" id="1">
-                activity
-            </div>
-            <div role="tabpanel" class="tab-pane pillUser" id="2">
-                deactive
-            </div>
-        </div>
     </div>
     <div class="col bg-light mt-3">
-        <h2>Панель администратора</h2>
-        <nav>
-            <ul class="nav nav-tabs mt-3" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link rightNav active" role="tab" href="#admin">Пользователи</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link rightNav" role="tab" href="#create">Новый пользователь</a>
-                </li>
-            </ul>
-        </nav>
         <div class="tab-content">
-            <div role="tabpanel" class="tab-pane tabAdmin active" id="admin">
+            <div role="tabpanel" class="tab-pane pillAdmin active" id="adminPanel">
+                <h2>Панель администратора</h2>
+                <nav>
+                    <ul class="nav nav-tabs mt-3" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link rightNav active" role="tab" href="#admin">Пользователи</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link rightNav" role="tab" href="#create">Новый пользователь</a>
+                        </li>
+                    </ul>
+                </nav>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane tabAdmin active" id="admin">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Все пользователи</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">ID</th>
+                                        <th class="text-center">Имя</th>
+                                        <th class="text-center">Фамилия</th>
+                                        <th class="text-center">Возраст</th>
+                                        <th class="text-center">Зарплата</th>
+                                        <th class="text-center">Почта</th>
+                                        <th class="text-center">Логин</th>
+                                        <th class="text-center">Пароль</th>
+                                        <th class="text-center">Права</th>
+                                        <th class="text-center">Редактировать</th>
+                                        <th class="text-center">Удалить</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="userList">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane tabCreate" id="create">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Добавить пользователя</h5>
+                            </div>
+                            <form>
+                                <div class="card-body-col-10">
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <input type="hidden" class="form-control" id="idNew" placeholder="Введите ID">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="firstNameNew"><b>Имя</b></label></div>
+                                        <input type="text" class="form-control" id="firstNameNew"
+                                               placeholder="Введите имя">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="lastNameNew"><b>Фамилия</b></label></div>
+                                        <input type="text" class="form-control" id="lastNameNew"
+                                               placeholder="Введите фамилию">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="ageNew"><b>Возраст</b></label></div>
+                                        <input type="text" class="form-control" id="ageNew"
+                                               placeholder="Введите возраст">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="salaryNew"><b>Зарплата</b></label></div>
+                                        <input type="text" class="form-control" id="salaryNew"
+                                               placeholder="Введите зарплату">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="emailNew"><b>Почта</b></label></div>
+                                        <input type="email" class="form-control" id="emailNew"
+                                               placeholder="Введите почту">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="usernameNew"><b>Логин</b></label></div>
+                                        <input type="text" class="form-control" id="usernameNew"
+                                               placeholder="Введите логин">
+                                    </div>
+                                    <div class="form-group mx-auto text-center" style="width: 350px;">
+                                        <label for="passwordNew"><b>Пароль</b></label>
+                                        <input type="password" class="form-control" id="passwordNew"
+                                               placeholder="Введите пароль">
+                                    </div>
+                                    <div class="form-group mx-auto" style="width: 350px;">
+                                        <div class="text-center"><label for="rolesNew"><b>Права</b></label></div>
+                                        <select class="custom-select" size="2" name="select_role" id="rolesNew">
+                                            <option value="1">ADMIN</option>
+                                            <option value="2">USER</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3 mx-auto" style="width: 258px;">
+                                        <button type="submit" class="btn btn-success mx-auto">Добавить нового
+                                            пользователя
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane pillUser" id="userPanel">
+                <h2>Информация о пользователе</h2>
                 <div class="card">
                     <div class="card-header">
-                        <h5>Все пользователи</h5>
+                        <h5>О пользователе</h5>
                     </div>
                     <div class="card-body">
                         <table class="table table-hover">
                             <thead>
                             <tr>
-                                <th class="text-center">ID</th>
-                                <th class="text-center">Имя</th>
-                                <th class="text-center">Фамилия</th>
-                                <th class="text-center">Возраст</th>
-                                <th class="text-center">Зарплата</th>
-                                <th class="text-center">Почта</th>
-                                <th class="text-center">Логин</th>
-                                <th class="text-center">Пароль</th>
-                                <th class="text-center">Права</th>
-                                <th class="text-center">Редактировать</th>
-                                <th class="text-center">Удалить</th>
+                                <th>ID</th>
+                                <th>Имя</th>
+                                <th>Фамилия</th>
+                                <th>Возраст</th>
+                                <th>Зарплата</th>
+                                <th>Почта</th>
+                                <th>Логин</th>
+                                <th>Пароль</th>
+                                <th>Права</th>
+                                <th>Права</th>
                             </tr>
                             </thead>
-                            <tbody class="userList">
+                            <tbody class="currentUser">
                             </tbody>
                         </table>
                     </div>
-                </div>
-            </div>
-            <div role="tabpanel" class="tab-pane tabCreate" id="create">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Добавить пользователя</h5>
-                    </div>
-                    <form>
-                        <div class="card-body-col-10">
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <input type="hidden" class="form-control" id="idNew" placeholder="Введите ID">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="firstNameNew"><b>Имя</b></label></div>
-                                <input type="text" class="form-control" id="firstNameNew"
-                                       placeholder="Введите имя">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="lastNameNew"><b>Фамилия</b></label></div>
-                                <input type="text" class="form-control" id="lastNameNew"
-                                       placeholder="Введите фамилию">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="ageNew"><b>Возраст</b></label></div>
-                                <input type="text" class="form-control" id="ageNew"
-                                       placeholder="Введите возраст">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="salaryNew"><b>Зарплата</b></label></div>
-                                <input type="text" class="form-control" id="salaryNew"
-                                       placeholder="Введите зарплату">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="emailNew"><b>Почта</b></label></div>
-                                <input type="email" class="form-control" id="emailNew"
-                                       placeholder="Введите почту">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="usernameNew"><b>Логин</b></label></div>
-                                <input type="text" class="form-control" id="usernameNew"
-                                       placeholder="Введите логин">
-                            </div>
-                            <div class="form-group mx-auto text-center" style="width: 350px;">
-                                <label for="passwordNew"><b>Пароль</b></label>
-                                <input type="password" class="form-control" id="passwordNew"
-                                       placeholder="Введите пароль">
-                            </div>
-                            <div class="form-group mx-auto" style="width: 350px;">
-                                <div class="text-center"><label for="rolesNew"><b>Права</b></label></div>
-                                <select class="custom-select" size="2" name="select_role" id="rolesNew">
-                                    <option value="1">ADMIN</option>
-                                    <option value="2">USER</option>
-                                </select>
-                            </div>
-                            <div class="form-group mt-3 mx-auto" style="width: 258px;">
-                                <button type="submit" class="btn btn-success mx-auto">Добавить нового пользователя
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
