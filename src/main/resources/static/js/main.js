@@ -6,7 +6,6 @@ const getLastName = document.getElementById('LastName')
 const getAge = document.getElementById('Age')
 const getSalary = document.getElementById('Salary')
 const getEmail = document.getElementById('Email')
-const getUsername = document.getElementById('Username')
 const getPassword = document.getElementById('Password')
 
 const getDelId = document.getElementById('delId')
@@ -15,7 +14,6 @@ const getDelLastName = document.getElementById('delLastName')
 const getDelAge = document.getElementById('delAge')
 const getDelSalary = document.getElementById('delSalary')
 const getDelEmail = document.getElementById('delEmail')
-const getDelUsername = document.getElementById('delUsername')
 const getDelPassword = document.getElementById('delPassword')
 
 const btnSubmit = document.querySelector('.btnSubmit')
@@ -23,6 +21,11 @@ const btnDelSubmit = document.querySelector('.btnDelSubmit')
 const url = 'http://localhost:8080/api/users'
 
 let allUsers = ''
+let curUser = ''
+let curUserRoles = ''
+const currentUserInfo = document.querySelector('.currentUser')
+let currentUser = document.getElementById('principal').innerHTML
+
 
 const renderUsers = (users) => {
     users.forEach(user => {
@@ -33,13 +36,13 @@ const renderUsers = (users) => {
                             <td>${user.lastName}</td>
                             <td>${user.age}</td>
                             <td>${user.salary}</td>
-                            <td>${user.email}</td>
                             <td>${user.username}</td>
                             <td>${user.password}</td>
-                            <td>${user.roles.length > 1 ? 
-                                        user.roles[0].role.substring(5) + ' ' 
-                                        + user.roles[1].role.substring(5) :
-                                        user.roles[0].role.substring(5)}
+                            <td>${user.roles.length < 2 ?
+            user.roles[0].role.substring(5) :
+            user.roles[0].role.substring(5) + ' ' +
+            user.roles[1].role.substring(5)}
+
                             </td>
                             <td>
                                 <button type="button" id="edit-user" 
@@ -54,39 +57,33 @@ const renderUsers = (users) => {
                         </tr>
                         `
     })
-    userList.innerHTML = allUsers
-}
-
-fetch(url)
-    .then(response => response.json())
-    .then(data => renderUsers(data))
-
-let curUser = ''
-let curUserRoles = ''
-const currentUserInfo = document.querySelector('.currentUser')
-// let currentUser = th:text="${#authentication.principal.username}"
-console.log(currentUser)
-fetch(`${url}/1`)
-    .then(response => response.json())
-    .then(user => {
-        user.roles.forEach(role => {
-            curUserRoles += role.role.substring(5) + ' '
-        })
-        curUser +=  `
+    users.forEach(user => {
+        if (user.username === currentUser) {
+            user.roles.forEach(role => {
+                curUserRoles += role.role.substring(5) + ' '
+            })
+            curUser += `
                         <tr>
                             <td></td>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td>${user.age}</td>
                             <td>${user.salary}</td>
-                            <td>${user.email}</td>
                             <td>${user.username}</td>
                             <td>${user.password}</td>
                             <td>${curUserRoles}</td>
                         </tr>
                     `
-        currentUserInfo.innerHTML = curUser
+            currentUserInfo.innerHTML = curUser
+            userList.innerHTML = allUsers
+        }
     })
+
+}
+
+fetch(url)
+    .then(response => response.json())
+    .then(data => renderUsers(data))
 
 
 const navTabLeft = document.querySelectorAll('.nav-link.leftNav')
@@ -148,8 +145,8 @@ userList.addEventListener('click', (event) => {
     let deleteButtonPressed = event.target.id === 'delete-user'
     const parent = event.target.parentElement.parentElement
     let id = parent.children[0].innerHTML
-    let username = parent.children[6].innerHTML
-    let password = parent.children[7].innerHTML
+    let username = parent.children[5].innerHTML
+    let password = parent.children[6].innerHTML
 
     if (editButtonPressed) {
         console.log(username)
@@ -159,15 +156,14 @@ userList.addEventListener('click', (event) => {
         getLastName.value = parent.children[2].innerHTML
         getAge.value = parent.children[3].innerHTML
         getSalary.value = parent.children[4].innerHTML
-        getEmail.value = parent.children[5].innerHTML
-        getUsername.value = username
+        getEmail.value = username
         getPassword.value = password
 
         $('.editForm #editModal').modal()
 
         btnSubmit.addEventListener('click', () => {
             fetch(`${url}`, {
-                method: "PUT",
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -176,9 +172,8 @@ userList.addEventListener('click', (event) => {
                     firstName: getFirstName.value,
                     lastName: getLastName.value,
                     salary: getSalary.value,
-                    email: getEmail.value,
                     age: getAge.value,
-                    username: getUsername.value,
+                    username: getEmail.value,
                     password: getPassword.value
                 })
             })
@@ -192,8 +187,7 @@ userList.addEventListener('click', (event) => {
         getDelLastName.value = parent.children[2].innerHTML
         getDelAge.value = parent.children[3].innerHTML
         getDelSalary.value = parent.children[4].innerHTML
-        getDelEmail.value = parent.children[5].innerHTML
-        getDelUsername.value = username
+        getDelEmail.value = username
         getDelPassword.value = password
 
         $('.delForm #delModal').modal()
@@ -205,4 +199,59 @@ userList.addEventListener('click', (event) => {
                 .then(response => response.json())
         })
     }
+})
+
+const newFirstName = document.getElementById('firstNameNew')
+const newLastName = document.getElementById('lastNameNew')
+const newAge = document.getElementById('ageNew')
+const newSalary = document.getElementById('salaryNew')
+const newEmail = document.getElementById('emailNew')
+const newPassword = document.getElementById('passwordNew')
+
+const btnCreate = document.querySelector('.btnCreate')
+const select = document.querySelector('.custom-select')
+
+btnCreate.addEventListener('click', (e) => {
+    e.preventDefault()
+    const admin = {
+        id: 2,
+        role: "ROLE_ADMIN",
+        authority: "ROLE_ADMIN"
+    }
+
+    const user = {
+        id: 1,
+        role: "ROLE_USER",
+        authority: "ROLE_USER"
+    }
+    let role = []
+    if (select.value === 'admin') {
+        role[0] = admin
+        role[1] = user
+    } else {
+        role[0] = user
+    }
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstName: newFirstName.value,
+            lastName: newLastName.value,
+            salary: newSalary.value,
+            age: newAge.value,
+            username: newEmail.value,
+            password: newPassword.value,
+            roles: role
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            const dataArr = []
+            dataArr.push(data)
+            renderUsers(dataArr)
+        })
+        .then(() => location.reload())
 })
