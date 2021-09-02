@@ -59,6 +59,7 @@ const renderUsers = (users) => {
                         </tr>
                         `
     })
+    const roleOfCurUser =  document.querySelector('.roleOfUser')
     users.forEach(user => {
         if (user.username === currentUser) {
             user.roles.forEach(role => {
@@ -66,7 +67,7 @@ const renderUsers = (users) => {
             })
             curUser += `
                         <tr>
-                            <td></td>
+                            <td>${user.id}</td>
                             <td>${user.firstName}</td>
                             <td>${user.lastName}</td>
                             <td>${user.age}</td>
@@ -76,9 +77,10 @@ const renderUsers = (users) => {
                             <td>${curUserRoles}</td>
                         </tr>
                     `
+            roleOfCurUser.innerHTML = curUserRoles
             currentUserInfo.innerHTML = curUser
-            userList.innerHTML = allUsers
         }
+        userList.innerHTML = allUsers
     })
 
 }
