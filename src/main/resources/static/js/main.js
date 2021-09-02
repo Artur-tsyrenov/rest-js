@@ -161,7 +161,27 @@ userList.addEventListener('click', (event) => {
 
         $('.editForm #editModal').modal()
 
+        const selectEditRole = document.querySelector('.roleEditNew')
+
         btnSubmit.addEventListener('click', () => {
+            const admin = {
+                id: 2,
+                role: "ROLE_ADMIN",
+                authority: "ROLE_ADMIN"
+            }
+
+            const user = {
+                id: 1,
+                role: "ROLE_USER",
+                authority: "ROLE_USER"
+            }
+            let role = []
+            if (selectEditRole.value === 'admin') {
+                role[0] = admin
+                role[1] = user
+            } else {
+                role[0] = user
+            }
             fetch(`${url}`, {
                 method: 'PUT',
                 headers: {
@@ -174,7 +194,8 @@ userList.addEventListener('click', (event) => {
                     salary: getSalary.value,
                     age: getAge.value,
                     username: getEmail.value,
-                    password: getPassword.value
+                    password: getPassword.value,
+                    roles: role
                 })
             })
                 .then(response => response.json())
@@ -209,7 +230,7 @@ const newEmail = document.getElementById('emailNew')
 const newPassword = document.getElementById('passwordNew')
 
 const btnCreate = document.querySelector('.btnCreate')
-const select = document.querySelector('.custom-select')
+const selectNewRole = document.querySelector('.roleForNew')
 
 btnCreate.addEventListener('click', (e) => {
     e.preventDefault()
@@ -225,7 +246,7 @@ btnCreate.addEventListener('click', (e) => {
         authority: "ROLE_USER"
     }
     let role = []
-    if (select.value === 'admin') {
+    if (selectNewRole.value === 'admin') {
         role[0] = admin
         role[1] = user
     } else {
