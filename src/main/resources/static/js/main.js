@@ -7,6 +7,7 @@ const getAge = document.getElementById('Age')
 const getSalary = document.getElementById('Salary')
 const getEmail = document.getElementById('Email')
 const getPassword = document.getElementById('Password')
+const getRole = document.getElementById('roles')           ///////////////////////!!!!!!!!!!!!!!!!!!
 
 const getDelId = document.getElementById('delId')
 const getDelFirstName = document.getElementById('delFirstName')
@@ -15,6 +16,7 @@ const getDelAge = document.getElementById('delAge')
 const getDelSalary = document.getElementById('delSalary')
 const getDelEmail = document.getElementById('delEmail')
 const getDelPassword = document.getElementById('delPassword')
+const getDelRole = document.getElementById('delRoles')       ///////////////////////!!!!!!!!!!!!!!!!!!
 
 const btnSubmit = document.querySelector('.btnSubmit')
 const btnDelSubmit = document.querySelector('.btnDelSubmit')
@@ -149,8 +151,6 @@ userList.addEventListener('click', (event) => {
     let password = parent.children[6].innerHTML
 
     if (editButtonPressed) {
-        console.log(username)
-        console.log(password)
         getId.value = id
         getFirstName.value = parent.children[1].innerHTML
         getLastName.value = parent.children[2].innerHTML
@@ -161,7 +161,11 @@ userList.addEventListener('click', (event) => {
 
         $('.editForm #editModal').modal()
 
-        const selectEditRole = document.querySelector('.roleEditNew')
+        if (parent.children[7].textContent.startsWith('ADMIN')) {
+            getRole.children[0].setAttribute('selected', '')
+        } else {
+            getRole.children[1].setAttribute('selected', '')
+        }
 
         btnSubmit.addEventListener('click', () => {
             const admin = {
@@ -176,7 +180,7 @@ userList.addEventListener('click', (event) => {
                 authority: "ROLE_USER"
             }
             let role = []
-            if (selectEditRole.value === 'admin') {
+            if (getRole.value === 'admin') {
                 role[0] = admin
                 role[1] = user
             } else {
@@ -210,6 +214,12 @@ userList.addEventListener('click', (event) => {
         getDelSalary.value = parent.children[4].innerHTML
         getDelEmail.value = username
         getDelPassword.value = password
+
+        if (parent.children[7].textContent.startsWith('ADMIN')) {
+            getDelRole.children[0].setAttribute('selected', '')
+        } else {
+            getDelRole.children[1].setAttribute('selected', '')
+        }
 
         $('.delForm #delModal').modal()
 
