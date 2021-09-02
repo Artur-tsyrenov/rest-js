@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import ru.javamentor.restjs.dao.RoleRepository;
 import ru.javamentor.restjs.dao.UserRepository;
-import ru.javamentor.restjs.models.Role;
 import ru.javamentor.restjs.models.User;
 
 import java.util.List;
@@ -65,10 +64,5 @@ public class UserServiceImpl implements UserService {
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(), user.getPassword(), user.getAuthorities()
         );
-    }
-
-    @Override
-    public List<Role> findAllRoles() {
-        return roleRepository.findAll();
     }
 }

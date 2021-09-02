@@ -13,10 +13,4 @@ public class ViewController {
     public String pageForUser() {
         return "myPage";
     }
-
-    @GetMapping("/test")
-    public String test() {
-        return "test";
-    }
-
 }

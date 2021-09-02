@@ -34,10 +34,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/**").permitAll()
-                // защищенные URL
-                .antMatchers("/admin/**").access("hasAnyRole('ADMIN')")
-                .antMatchers("/user/**").access("hasAnyRole('USER', 'ADMIN')")
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/**").access("hasAnyRole('USER', 'ADMIN')")
                 .and().formLogin()
                 .and().cors()
                 .and().csrf().disable();
